@@ -7,6 +7,7 @@ package visoes;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -76,11 +77,11 @@ public class FormCadPaciente extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Cadastro de Pacientes");
 
-        jLabel3.setText("CPF");
+        jLabel3.setText("CPF*");
 
-        jLabel4.setText("Número do plano");
+        jLabel4.setText("Número do plano*");
 
-        jLabel5.setText("Data de nascimento");
+        jLabel5.setText("Data de nascimento*");
 
         jLabel7.setText("Telefone Fixo");
 
@@ -94,15 +95,15 @@ public class FormCadPaciente extends javax.swing.JFrame {
 
         txtNumPlano.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
-        jLabel2.setText("Nome");
+        jLabel2.setText("Nome*");
 
         txtNome.setToolTipText("Digite o nome do paciente que será contratado");
 
-        txtDataNasc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        txtDataNasc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
         txtDataNasc.setToolTipText("Digite a data de nascimento do paciente");
 
         try {
-            txtCelular.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) 9####-####")));
+            txtCelular.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -286,6 +287,11 @@ public class FormCadPaciente extends javax.swing.JFrame {
         btnSalvar.setBackground(new java.awt.Color(92, 184, 92));
         btnSalvar.setForeground(new java.awt.Color(255, 255, 255));
         btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setBackground(new java.awt.Color(217, 83, 79));
         btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
@@ -341,35 +347,42 @@ public class FormCadPaciente extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        // TODO add your handling code here:
+        String numPlano = txtNumPlano.getText();
+        String nome = txtNome.getText();
+        String cpf = txtCpf.getText();
+        String cpfNaoFormatado = cpf.replaceAll("[. -]", "");
+        String data_nasc = txtDataNasc.getText();
+        String fixo = txtFixo.getText();
+        if (fixo.replaceAll("[() -]", "").equals("")) {
+            fixo = "";
+        }
+        String celular = txtCelular.getText();
+        if (celular.replaceAll("[() -]", "").equals("")) {
+            celular = "";
+        }
+
+        if (numPlano.equals("") || nome.equals("") || cpfNaoFormatado.equals("") || data_nasc.equals("")) {
+            JOptionPane.showMessageDialog(null, "Os campos com \"*\" são obrigatórios e não podem ficar vazios", "Preencha os campos", JOptionPane.ERROR_MESSAGE);
+        } else {
+            String mensagem = " Número do plano: " + numPlano;
+            mensagem += "\n Nome: " + nome;
+            mensagem += "\n CPF: " + cpf;
+            mensagem += "\n Data de nascimento: " + data_nasc;
+            mensagem += "\n Fixo: " + fixo;
+            mensagem += "\n Celular: " + celular;
+            JOptionPane.showMessageDialog(null, mensagem, "Dados inseridos", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormCadPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormCadPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormCadPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormCadPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

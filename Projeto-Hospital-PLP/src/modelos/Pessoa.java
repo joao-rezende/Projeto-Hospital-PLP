@@ -51,19 +51,8 @@ public class Pessoa {
         return formato.format(data);
     }
 
-    public void setData_nasc(Calendar data_nasc) throws Exception {
-        Calendar data_atual = Calendar.getInstance();
-        if (data_nasc.get(Calendar.YEAR) > data_atual.get(Calendar.YEAR)) {
-            throw new Exception("O ano é inválido");
-        } else if (data_nasc.get(Calendar.YEAR) == data_atual.get(Calendar.YEAR) && data_nasc.get(Calendar.MONTH) > data_atual.get(Calendar.MONTH)) {
-            throw new Exception("O mês é inválido");
-        } else if (data_nasc.get(Calendar.YEAR) == data_atual.get(Calendar.YEAR) && data_nasc.get(Calendar.MONTH) == data_atual.get(Calendar.MONTH)
-                && data_nasc.get(Calendar.DAY_OF_MONTH) > data_atual.get(Calendar.DAY_OF_MONTH)) {
-            throw new Exception("O dia do mês é inválido");
-        } else {
-            System.out.println("Data atualizada com sucesso");
-            this.data_nasc = data_nasc;
-        }
+    public void setData_nasc(Calendar data_nasc) {
+        this.data_nasc = data_nasc;
     }
 
     public int getFixo() {

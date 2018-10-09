@@ -14,12 +14,12 @@ import java.util.List;
  */
 public class Paciente extends Pessoa{
     
-    private int idPaciente;
+    private static int idPaciente = 0;
     private int numPlano;
 
-    public Paciente(int idPaciente, int numPlano, String cpf, String nome, Calendar data_nasc, int fixo, int celular, List<Endereco> enderecos) {
+    public Paciente(int numPlano, String cpf, String nome, Calendar data_nasc, int fixo, int celular, List<Endereco> enderecos) {
         super(cpf, nome, data_nasc, fixo, celular, enderecos);
-        this.idPaciente = idPaciente;
+        Paciente.idPaciente = Paciente.idPaciente + 1;
         this.numPlano = numPlano;
     }
 

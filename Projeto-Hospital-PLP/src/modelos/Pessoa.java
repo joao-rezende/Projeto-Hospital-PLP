@@ -15,17 +15,17 @@ public class Pessoa {
     private String cpf;
     private String nome;
     private Calendar data_nasc;
-    private int fixo;
-    private int celular;
-    private List<Endereco> enderecos;
+    private String fixo;
+    private String celular;
+    private Endereco endereco;
 
-    public Pessoa(String cpf, String nome, Calendar data_nasc, int fixo, int celular, List<Endereco> enderecos) {
+    public Pessoa(String cpf, String nome, Calendar data_nasc, String fixo, String celular, Endereco endereco) {
         this.cpf = cpf;
         this.nome = nome;
         this.data_nasc = data_nasc;
         this.fixo = fixo;
         this.celular = celular;
-        this.enderecos = enderecos;
+        this.endereco = endereco;
     }
 
     public String getCpf() {
@@ -55,28 +55,28 @@ public class Pessoa {
         this.data_nasc = data_nasc;
     }
 
-    public int getFixo() {
+    public String getFixo() {
         return fixo;
     }
 
-    public void setFixo(int fixo) {
+    public void setFixo(String fixo) {
         this.fixo = fixo;
     }
 
-    public int getCelular() {
+    public String getCelular() {
         return celular;
     }
 
-    public void setCelular(int celular) {
+    public void setCelular(String celular) {
         this.celular = celular;
     }
 
-    public List<Endereco> getEnderecos() {
-        return enderecos;
+    public Endereco getEnderecos() {
+        return endereco;
     }
 
-    public void setEnderecos(List<Endereco> enderecos) {
-        this.enderecos = enderecos;
+    public void setEnderecos(Endereco endereco) {
+        this.endereco = endereco;
     }
 
 }

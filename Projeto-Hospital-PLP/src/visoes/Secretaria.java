@@ -6,7 +6,18 @@
 package visoes;
 
 import controladores.Hospital;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import modelos.Consulta;
 import modelos.Especializacao;
 import modelos.Medico;
 import modelos.Paciente;
@@ -40,6 +51,7 @@ public class Secretaria extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btnConsulta = new javax.swing.JButton();
         btn_add_paciente1 = new javax.swing.JButton();
+        btnSalvarArq = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Hospital PLP - Secretaria");
@@ -82,20 +94,31 @@ public class Secretaria extends javax.swing.JFrame {
             }
         });
 
+        btnSalvarArq.setText("Salvar");
+        btnSalvarArq.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarArqActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
-                .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(80, 80, 80)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_add_paciente1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnSalvarArq)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,7 +129,9 @@ public class Secretaria extends javax.swing.JFrame {
                 .addComponent(btn_add_paciente1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(70, 70, 70)
                 .addComponent(btnConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addComponent(btnSalvarArq)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -135,6 +160,55 @@ public class Secretaria extends javax.swing.JFrame {
         formCadPaciente.setVisible(true);
     }//GEN-LAST:event_btn_add_paciente1ActionPerformed
 
+    private void btnSalvarArqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarArqActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fc = new JFileChooser();
+        fc.setAcceptAllFileFilterUsed(false);
+        int returnVal = fc.showOpenDialog(Secretaria.this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File arquivo = fc.getSelectedFile();
+            String nomeArq = arquivo.getName();
+            String extensao = nomeArq.substring(nomeArq.length() - 4, nomeArq.length());
+
+            if (extensao.equals(".txt")) {
+                PrintWriter gravaArq;
+                try {
+                    gravaArq = new PrintWriter(arquivo);
+                    
+                    List<Consulta> consultas = controller.getConsultas();
+                    
+                    SimpleDateFormat formatoDt = new SimpleDateFormat("dd/MM/yyyy");
+                    SimpleDateFormat formatoHr = new SimpleDateFormat("HH:mm");
+                    
+                    String dados = "";
+                    for (Consulta consulta : consultas) {
+                        Date data = consulta.getDataConsulta().getTime();
+                        Date hora = consulta.getHoraConsulta().getTime();
+                        dados += "======= Consulta " + consulta.getIdConsulta() + " =======";
+                        dados += "\nMédico: " + consulta.getIdMedico();
+                        dados += "  Paciente: " + consulta.getIdPaciente();
+                        dados += "\nData: " + formatoDt.format(data);
+                        dados += "  Hora: " + formatoHr.format(hora);
+                        dados += "\nTemperatura: " + consulta.getTemperatura();
+                        dados += "  Pressão: " + consulta.getPressao();
+                        dados += "  Peso: " + consulta.getPeso();
+                        dados += "\nSintomas: " + consulta.getSintomas();
+                        dados += "\n\n";
+                    }
+                    
+                    gravaArq.printf(dados);
+                    
+                    gravaArq.close();
+                } catch (FileNotFoundException ex) {
+                    System.out.println("Erro ao gravar no arquivo - " + ex);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Escolha um arquivo de texto(.txt)", "ERRO", JOptionPane.ERROR_MESSAGE);
+            }
+            //This is where a real application would open the file.
+        }
+    }//GEN-LAST:event_btnSalvarArqActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -149,6 +223,7 @@ public class Secretaria extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConsulta;
+    private javax.swing.JButton btnSalvarArq;
     private javax.swing.JButton btn_add_paciente1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

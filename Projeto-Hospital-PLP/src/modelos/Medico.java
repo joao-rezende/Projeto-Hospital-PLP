@@ -6,7 +6,6 @@
 package modelos;
 
 import java.util.Calendar;
-import java.util.List;
 
 /**
  *
@@ -17,10 +16,10 @@ public class Medico extends Pessoa {
     private int idMedico;
     private int crm;
     private Especializacao especializacao;
-    private static int seq_id = 0;
+    private static int seq_id = 1;
 
-    public Medico(int crm, Especializacao especializacao, String cpf, String nome, Calendar data_nasc, int fixo, int celular, List<Endereco> enderecos) {
-        super(cpf, nome, data_nasc, fixo, celular, enderecos);
+    public Medico(int crm, Especializacao especializacao, String cpf, String nome, Calendar data_nasc, String fixo, String celular, Endereco endereco) {
+        super(cpf, nome, data_nasc, fixo, celular, endereco);
         this.idMedico = seq_id;
         seq_id++;
         this.crm = crm;

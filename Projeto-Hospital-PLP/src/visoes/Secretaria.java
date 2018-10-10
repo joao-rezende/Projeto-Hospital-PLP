@@ -133,16 +133,6 @@ public class Secretaria extends javax.swing.JFrame {
         FormCadPaciente formCadPaciente = new FormCadPaciente();
         formCadPaciente.setLocationRelativeTo(null);
         formCadPaciente.setVisible(true);
-
-        Medico m = new Medico(10, Especializacao.ORTOPEDISTA, "02183679611", "Dr. Miguel", Calendar.getInstance(), 0, 0, null);
-        new Hospital().inserirMedico(m);
-        m = new Medico(10, Especializacao.ORTOPEDISTA, "02183679611", "Dr. João", Calendar.getInstance(), 0, 0, null);
-        new Hospital().inserirMedico(m);
-
-        Paciente p = new Paciente(10, "02183679611", "Joao Vitor", Calendar.getInstance(), 0, 0, null);
-        new Hospital().inserirPaciente(p);
-        p = new Paciente(10, "02183679611", "Reinaldo", Calendar.getInstance(), 0, 0, null);
-        new Hospital().inserirPaciente(p);
     }//GEN-LAST:event_btn_add_paciente1ActionPerformed
 
     /**

@@ -393,9 +393,12 @@ public class FormCadConsulta extends javax.swing.JFrame {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         // TODO add your handling code here:
         Calendar data = Calendar.getInstance();
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar hora = Calendar.getInstance();
+        SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm");
         try {
-            data.setTime(formato.parse(txtData.getText()));
+            data.setTime(formatoData.parse(txtData.getText()));
+            hora.setTime(formatoHora.parse(txtHora.getText()));
         } catch (ParseException ex) {
             Logger.getLogger(FormCadConsulta.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -413,7 +416,7 @@ public class FormCadConsulta extends javax.swing.JFrame {
         double temp = Double.parseDouble(str_temp.replace(",", "."));
         double peso = Double.parseDouble(str_peso.replace(",", "."));
 
-        Consulta c = new Consulta(1, m.getIdMedico(), p.getIdPaciente(), data, sintomas, temp, str_pressao, peso);
+        Consulta c = new Consulta(1, m.getIdMedico(), p.getIdPaciente(), data, hora, sintomas, temp, str_pressao, peso);
 
         controlador.inserirConsulta(c);
 

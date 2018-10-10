@@ -43,37 +43,43 @@ public class Consultas extends javax.swing.JFrame {
         modelo.addColumn("Médico");
         modelo.addColumn("Paciente");
         modelo.addColumn("Data");
+        modelo.addColumn("Hora");
         modelo.addColumn("Sintomas");
-                
+
         //Formata a data
         if (consultas == null || consultas.isEmpty()) {
             modelo.addRow(new String[]{
                 "-",
                 "-",
                 "-",
+                "-",
                 "-"
             });
         } else {
-            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm");
             for (Consulta consulta : consultas) {
-                Date dataCons = consulta.getDataConsulta().getTime();
+                Date dataConsulta = consulta.getDataConsulta().getTime();
+                Date horaConsulta = consulta.getHoraConsulta().getTime();
                 Medico m = controlador.buscaMedico(consulta.getIdMedico());
                 Paciente p = controlador.buscaPaciente(consulta.getIdPaciente());
                 modelo.addRow(new String[]{
                     String.valueOf(m.getNome()),
                     String.valueOf(p.getNome()),
-                    formato.format(dataCons),
+                    formatoData.format(dataConsulta),
+                    formatoHora.format(horaConsulta),
                     consulta.getSintomas()
                 });
             }
         }
-        
+
         tbConsultas.setModel(modelo);
 
-        tbConsultas.getColumnModel().getColumn(0).setPreferredWidth(180);
-        tbConsultas.getColumnModel().getColumn(1).setPreferredWidth(180);
+        tbConsultas.getColumnModel().getColumn(0).setPreferredWidth(165);
+        tbConsultas.getColumnModel().getColumn(1).setPreferredWidth(165);
         tbConsultas.getColumnModel().getColumn(2).setPreferredWidth(100);
-        tbConsultas.getColumnModel().getColumn(3).setPreferredWidth(240);
+        tbConsultas.getColumnModel().getColumn(3).setPreferredWidth(70);
+        tbConsultas.getColumnModel().getColumn(4).setPreferredWidth(200);
     }
 
     /**

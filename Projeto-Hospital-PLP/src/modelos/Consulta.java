@@ -13,17 +13,19 @@ public class Consulta {
     private int idMedico;
     private int idPaciente;
     private Calendar dataConsulta;
+    private Calendar horaConsulta;
     private String sintomas;
     private double temperatura;
     private String pressao;
     private double peso;
-            
-    public Consulta(int idConsulta, int idMedico, int idPaciente, Calendar dataConsulta, String sintomas, double temperatura,
+
+    public Consulta(int idConsulta, int idMedico, int idPaciente, Calendar dataConsulta, Calendar horaConsulta, String sintomas, double temperatura,
             String pressao, double peso) {
         this.idConsulta = idConsulta;
         this.idMedico = idMedico;
         this.idPaciente = idPaciente;
         this.dataConsulta = dataConsulta;
+        this.horaConsulta = horaConsulta;
         this.sintomas = sintomas;
         this.temperatura = temperatura;
         this.pressao = pressao;
@@ -60,6 +62,14 @@ public class Consulta {
 
     public void setDataConsulta(Calendar dataConsulta) {
         this.dataConsulta = dataConsulta;
+    }
+
+    public Calendar getHoraConsulta() {
+        return horaConsulta;
+    }
+
+    public void setHoraConsulta(Calendar horaConsulta) {
+        this.horaConsulta = horaConsulta;
     }
 
     public String getSintomas() {

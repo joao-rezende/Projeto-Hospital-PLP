@@ -22,7 +22,7 @@ public class Hospital {
     private static final List<Medico> medicos = new ArrayList<>();
     private static final List<Paciente> pacientes = new ArrayList<>();
 
-    public void inserirConsulta(Consulta consulta) {
+    public void inserir(Consulta consulta) {
         consultas.add(consulta);
     }
 
@@ -36,7 +36,7 @@ public class Hospital {
         c.setVisible(true);
     }
 
-    public void inserirMedico(Medico medico) {
+    public void inserir(Medico medico) {
         medicos.add(medico);
     }
 
@@ -53,7 +53,7 @@ public class Hospital {
         return null;
     }
 
-    public void inserirPaciente(Paciente paciente) {
+    public void inserir(Paciente paciente) {
         pacientes.add(paciente);
     }
 

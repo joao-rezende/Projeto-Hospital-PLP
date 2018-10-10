@@ -418,7 +418,7 @@ public class FormCadConsulta extends javax.swing.JFrame {
 
         Consulta c = new Consulta(1, m.getIdMedico(), p.getIdPaciente(), data, hora, sintomas, temp, str_pressao, peso);
 
-        controlador.inserirConsulta(c);
+        controlador.inserir(c);
 
         dispose();
     }//GEN-LAST:event_btnSalvarActionPerformed

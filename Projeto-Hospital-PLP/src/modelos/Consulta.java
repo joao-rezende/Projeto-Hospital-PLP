@@ -1,5 +1,8 @@
 package modelos;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+
 /**
  *
  * @author aluno
@@ -7,18 +10,20 @@ package modelos;
 public class Consulta {
 
     private int idConsulta;
-    private Medico medico;
-    private Paciente paciente;
+    private int idMedico;
+    private int idPaciente;
+    private Calendar dataConsulta;
     private String sintomas;
-    private float temperatura;
-    private float pressao;
-    private float peso;
-
-    public Consulta(int idConsulta, Medico medico, Paciente paciente, String sintomas, float temperatura,
-            float pressao, float peso) {
+    private double temperatura;
+    private String pressao;
+    private double peso;
+            
+    public Consulta(int idConsulta, int idMedico, int idPaciente, Calendar dataConsulta, String sintomas, double temperatura,
+            String pressao, double peso) {
         this.idConsulta = idConsulta;
-        this.medico = medico;
-        this.paciente = paciente;
+        this.idMedico = idMedico;
+        this.idPaciente = idPaciente;
+        this.dataConsulta = dataConsulta;
         this.sintomas = sintomas;
         this.temperatura = temperatura;
         this.pressao = pressao;
@@ -33,20 +38,28 @@ public class Consulta {
         this.idConsulta = idConsulta;
     }
 
-    public Medico getMedico() {
-        return medico;
+    public int getIdMedico() {
+        return idMedico;
     }
 
-    public void setMedico(Medico medico) {
-        this.medico = medico;
+    public void setIdMedico(int idMedico) {
+        this.idMedico = idMedico;
     }
 
-    public Paciente getPaciente() {
-        return paciente;
+    public int getIdPaciente() {
+        return idPaciente;
     }
 
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
+    public void setIdPaciente(int idPaciente) {
+        this.idPaciente = idPaciente;
+    }
+
+    public Calendar getDataConsulta() {
+        return dataConsulta;
+    }
+
+    public void setDataConsulta(Calendar dataConsulta) {
+        this.dataConsulta = dataConsulta;
     }
 
     public String getSintomas() {
@@ -57,27 +70,27 @@ public class Consulta {
         this.sintomas = sintomas;
     }
 
-    public float getTemperatura() {
+    public double getTemperatura() {
         return temperatura;
     }
 
-    public void setTemperatura(float temperatura) {
+    public void setTemperatura(double temperatura) {
         this.temperatura = temperatura;
     }
 
-    public float getPressao() {
+    public String getPressao() {
         return pressao;
     }
 
-    public void setPressao(float pressao) {
+    public void setPressao(String pressao) {
         this.pressao = pressao;
     }
 
-    public float getPeso() {
+    public double getPeso() {
         return peso;
     }
 
-    public void setPeso(float peso) {
+    public void setPeso(double peso) {
         this.peso = peso;
     }
 

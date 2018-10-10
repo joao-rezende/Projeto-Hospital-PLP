@@ -12,14 +12,16 @@ import java.util.List;
  *
  * @author aluno
  */
-public class Paciente extends Pessoa{
-    
-    private static int idPaciente = 0;
+public class Paciente extends Pessoa {
+
+    private int idPaciente;
     private int numPlano;
+    private static int seq_id = 0;
 
     public Paciente(int numPlano, String cpf, String nome, Calendar data_nasc, int fixo, int celular, List<Endereco> enderecos) {
         super(cpf, nome, data_nasc, fixo, celular, enderecos);
-        Paciente.idPaciente = Paciente.idPaciente + 1;
+        this.idPaciente = seq_id;
+        seq_id++;
         this.numPlano = numPlano;
     }
 
@@ -38,5 +40,5 @@ public class Paciente extends Pessoa{
     public void setNumPlano(int numPlano) {
         this.numPlano = numPlano;
     }
-    
+
 }

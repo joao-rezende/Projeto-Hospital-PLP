@@ -5,7 +5,7 @@
  */
 package visoes;
 
-import controladores.Hospital;
+import controladores.HospitalController;
 import java.text.SimpleDateFormat;
 import modelos.Consulta;
 import java.util.ArrayList;
@@ -24,14 +24,16 @@ import modelos.Paciente;
  */
 public class Consultas extends javax.swing.JFrame {
 
-    private final Hospital controlador;
+    private final HospitalController controlador;
 
     /**
      * Creates new form Consultas
+     *
+     * @param controlador
      */
-    public Consultas() {
+    public Consultas(HospitalController controlador) {
         initComponents();
-        this.controlador = new Hospital();
+        this.controlador = controlador;
         preencherTabela();
     }
 
@@ -179,7 +181,7 @@ public class Consultas extends javax.swing.JFrame {
 
     private void btnNovaConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovaConsultaActionPerformed
         // TODO add your handling code here:
-        FormCadConsulta formCadConsulta = new FormCadConsulta();
+        FormCadConsulta formCadConsulta = new FormCadConsulta(controlador);
         formCadConsulta.setLocationRelativeTo(null);
         formCadConsulta.setVisible(true);
 
@@ -221,7 +223,8 @@ public class Consultas extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Consultas().setVisible(true);
+                JFrame frame = new JFrame();
+                frame.setVisible(true);
             }
         });
     }

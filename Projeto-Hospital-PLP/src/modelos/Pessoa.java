@@ -1,5 +1,6 @@
 package modelos;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -10,7 +11,7 @@ import java.util.List;
  *
  * @author Antonio, João Vitor, Liliana
  */
-public class Pessoa {
+public class Pessoa implements Serializable{
 
     private String cpf;
     private String nome;

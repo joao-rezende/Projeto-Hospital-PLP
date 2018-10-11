@@ -5,7 +5,7 @@
  */
 package visoes;
 
-import controladores.Hospital;
+import controladores.HospitalController;
 import java.awt.Component;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -31,14 +31,16 @@ import modelos.Paciente;
  */
 public class FormCadConsulta extends javax.swing.JFrame {
 
-    private final Hospital controlador;
+    private final HospitalController controlador;
 
     /**
      * Creates new form FormCadConsulta
+     *
+     * @param controlador
      */
-    public FormCadConsulta() {
+    public FormCadConsulta(HospitalController controlador) {
         initComponents();
-        controlador = new Hospital();
+        this.controlador = controlador;
         preencheCombobox();
     }
 
@@ -58,7 +60,7 @@ public class FormCadConsulta extends javax.swing.JFrame {
 
     public class ComboModelMedico extends AbstractListModel implements ComboBoxModel {
 
-        private List<Medico> lista;
+        private final List<Medico> lista;
         private Medico selected;
 
         public ComboModelMedico(List<Medico> lista) {
@@ -110,7 +112,7 @@ public class FormCadConsulta extends javax.swing.JFrame {
 
     public class ComboModelPaciente extends AbstractListModel implements ComboBoxModel {
 
-        private List<Paciente> lista;
+        private final List<Paciente> lista;
         private Paciente selected;
 
         public ComboModelPaciente(List<Paciente> lista) {
@@ -250,7 +252,6 @@ public class FormCadConsulta extends javax.swing.JFrame {
         btnCancelar.setBackground(new java.awt.Color(217, 83, 79));
         btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
         btnCancelar.setText("Cancelar");
-        btnCancelar.setPreferredSize(new java.awt.Dimension(96, 25));
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -322,7 +323,7 @@ public class FormCadConsulta extends javax.swing.JFrame {
                                         .addComponent(jLabel8)))))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCancelar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSalvar)
                         .addContainerGap())))
@@ -368,7 +369,7 @@ public class FormCadConsulta extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -379,7 +380,7 @@ public class FormCadConsulta extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
         );
 
         pack();
@@ -425,7 +426,7 @@ public class FormCadConsulta extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
-        Consultas consultas = new Consultas();
+        Consultas consultas = new Consultas(controlador);
         consultas.setLocationRelativeTo(this);
         consultas.setVisible(true);
     }//GEN-LAST:event_formWindowClosed

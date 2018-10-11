@@ -1,11 +1,13 @@
 package modelos;
 
+import java.io.Serializable;
+
 /**
  * Classe responsável pela manipulação de endereço
  *
  * @author Antonio, João Vitor, Liliana
  */
-public class Endereco {
+public class Endereco implements Serializable{
 
     private int cep;
     private String estado;

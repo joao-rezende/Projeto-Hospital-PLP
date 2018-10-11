@@ -1,13 +1,13 @@
 package modelos;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.Calendar;
 
 /**
  *
  * @author aluno
  */
-public class Consulta {
+public class Consulta implements Serializable{
 
     private int idConsulta;
     private int idMedico;

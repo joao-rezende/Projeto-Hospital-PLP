@@ -121,6 +121,10 @@ public class HospitalController implements Serializable {
     public List getConsultas() {
         return consultas;
     }
+    
+    public void remover(Consulta consulta) {
+        consultas.remove(consulta);
+    }
 
     public void inserir(Medico medico) {
         medicos.add(medico);

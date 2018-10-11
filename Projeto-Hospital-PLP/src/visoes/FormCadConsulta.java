@@ -46,6 +46,12 @@ public class FormCadConsulta extends javax.swing.JFrame {
         this.controlador = controlador;
         preencheCombobox();
     }
+    
+    public FormCadConsulta(HospitalController controlador, Consulta c) {
+        initComponents();
+        this.controlador = controlador;
+        preencheCombobox();
+    }
 
     public final void preencheCombobox() {
         List<Medico> medicos = controlador.getMedicos();

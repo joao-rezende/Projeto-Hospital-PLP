@@ -11,6 +11,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import modelos.Paciente;
 
 /**
  *
@@ -22,6 +23,10 @@ public class FormCadPaciente extends javax.swing.JFrame {
      * Creates new form FormCadPaciente
      */
     public FormCadPaciente() {
+        initComponents();
+    }
+    
+    public FormCadPaciente(Paciente p) {
         initComponents();
     }
 

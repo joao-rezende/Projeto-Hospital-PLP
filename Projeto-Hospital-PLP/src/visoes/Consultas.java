@@ -37,6 +37,10 @@ public class Consultas extends javax.swing.JFrame {
         preencherTabela();
     }
 
+    Consultas() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public final void preencherTabela() {
         List<Consulta> consultas = controlador.getConsultas();
 
@@ -107,6 +111,7 @@ public class Consultas extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tbConsultas = new javax.swing.JTable();
         btnNovaConsulta = new javax.swing.JButton();
+        btnApagaConsulta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Hospital PLP - Consultas");
@@ -133,6 +138,15 @@ public class Consultas extends javax.swing.JFrame {
             }
         });
 
+        btnApagaConsulta.setBackground(new java.awt.Color(217, 83, 79));
+        btnApagaConsulta.setForeground(new java.awt.Color(255, 255, 255));
+        btnApagaConsulta.setText("Apagar consulta");
+        btnApagaConsulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnApagaConsultaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -144,7 +158,8 @@ public class Consultas extends javax.swing.JFrame {
                     .addComponent(jSeparator1)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnApagaConsulta)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnNovaConsulta)))
                 .addContainerGap())
         );
@@ -156,7 +171,9 @@ public class Consultas extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnNovaConsulta)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnNovaConsulta)
+                    .addComponent(btnApagaConsulta))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -190,6 +207,16 @@ public class Consultas extends javax.swing.JFrame {
         // TODO add your handling code here:
 
     }//GEN-LAST:event_formWindowClosed
+
+    private void btnApagaConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagaConsultaActionPerformed
+        // TODO add your handling code here:
+        FormExclusaoConsulta formExclusaoConsulta = new FormExclusaoConsulta(controlador);
+        formExclusaoConsulta.setResizable(false);
+        formExclusaoConsulta.setLocationRelativeTo(null);
+        formExclusaoConsulta.setVisible(true);
+
+        dispose();
+    }//GEN-LAST:event_btnApagaConsultaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -229,6 +256,7 @@ public class Consultas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnApagaConsulta;
     private javax.swing.JButton btnNovaConsulta;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

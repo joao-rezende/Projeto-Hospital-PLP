@@ -19,8 +19,11 @@ import java.util.logging.Logger;
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import modelos.Consulta;
 import modelos.Medico;
 import modelos.Paciente;
@@ -195,6 +198,8 @@ public class FormCadConsulta extends javax.swing.JFrame {
         txtSintomas = new javax.swing.JTextArea();
         btnCancelar = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        txtIdConsulta = new javax.swing.JTextField();
 
         jLabel9.setText("jLabel9");
 
@@ -233,7 +238,7 @@ public class FormCadConsulta extends javax.swing.JFrame {
 
         jLabel8.setText("Peso");
 
-        jLabel10.setText("Sintomas");
+        jLabel10.setText("Sintomas*");
 
         txtTemp.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
 
@@ -266,6 +271,8 @@ public class FormCadConsulta extends javax.swing.JFrame {
                 btnSalvarActionPerformed(evt);
             }
         });
+
+        jLabel11.setText("Número da consulta*");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -326,7 +333,12 @@ public class FormCadConsulta extends javax.swing.JFrame {
                         .addComponent(btnCancelar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSalvar)
-                        .addContainerGap())))
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtIdConsulta))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -336,6 +348,10 @@ public class FormCadConsulta extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtIdConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3))
@@ -376,11 +392,11 @@ public class FormCadConsulta extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)
         );
 
         pack();
@@ -393,35 +409,49 @@ public class FormCadConsulta extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         // TODO add your handling code here:
-        Calendar data = Calendar.getInstance();
-        Calendar hora = Calendar.getInstance();
-        SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm");
-        try {
-            data.setTime(formatoData.parse(txtData.getText()));
-            hora.setTime(formatoHora.parse(txtHora.getText()));
-        } catch (ParseException ex) {
-            Logger.getLogger(FormCadConsulta.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
         Medico m = (Medico) txtMedico.getSelectedItem();
         Paciente p = (Paciente) txtPaciente.getSelectedItem();
+        if (!txtIdConsulta.getText().equals("") && m != null && p != null && !txtData.getText().equals("") && !txtHora.getText().equals("")) {
 
-        String sintomas = (txtSintomas.getText().isEmpty()) ? " " : txtSintomas.getText();
-        String str_temp = (txtTemp.getText().isEmpty()) ? "0,00" : txtTemp.getText();
-        String str_peso = (txtPeso.getText().isEmpty()) ? "0,00" : txtPeso.getText();
-        String str_pressao = txtPressao.getText();
+            Calendar data = Calendar.getInstance();
+            Calendar hora = Calendar.getInstance();
+            SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm");
+            try {
+                data.setTime(formatoData.parse(txtData.getText()));
+                hora.setTime(formatoHora.parse(txtHora.getText()));
+            } catch (ParseException ex) {
+                Logger.getLogger(FormCadConsulta.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
-        str_pressao = (str_pressao.replace("/", "").isEmpty()) ? " " : txtPressao.getText();
+            int idConsulta = Integer.parseInt(txtIdConsulta.getText());
 
-        double temp = Double.parseDouble(str_temp.replace(",", "."));
-        double peso = Double.parseDouble(str_peso.replace(",", "."));
+            Consulta consulta = controlador.buscaConsulta(idConsulta);
+            if (consulta == null) {
 
-        Consulta c = new Consulta(1, m.getIdMedico(), p.getIdPaciente(), data, hora, sintomas, temp, str_pressao, peso);
+                String sintomas = (txtSintomas.getText().isEmpty()) ? " " : txtSintomas.getText();
+                String str_temp = (txtTemp.getText().isEmpty()) ? "0,00" : txtTemp.getText();
+                String str_peso = (txtPeso.getText().isEmpty()) ? "0,00" : txtPeso.getText();
+                String str_pressao = txtPressao.getText();
 
-        controlador.inserir(c);
+                str_pressao = (str_pressao.replace("/", "").isEmpty()) ? " " : txtPressao.getText();
 
-        dispose();
+                double temp = Double.parseDouble(str_temp.replace(",", "."));
+                double peso = Double.parseDouble(str_peso.replace(",", "."));
+
+                Consulta c = new Consulta(idConsulta, m.getIdMedico(), p.getIdPaciente(), data, hora, sintomas, temp, str_pressao, peso);
+
+                controlador.inserir(c);
+
+                dispose();
+            } else {
+                ImageIcon icon = new ImageIcon(HospitalController.class.getResource("../imagens/erro.png"));
+                JOptionPane.showMessageDialog(null, new JLabel("O número da consulta inserido já está sendo usado", icon, JLabel.LEFT), "Número inválido", JOptionPane.PLAIN_MESSAGE);
+            }
+        } else {
+            ImageIcon icon = new ImageIcon(HospitalController.class.getResource("../imagens/erro.png"));
+            JOptionPane.showMessageDialog(null, new JLabel("Os campos com \"*\" são obrigatórios e não podem ficar vazios", icon, JLabel.LEFT), "Preencha os campos", JOptionPane.PLAIN_MESSAGE);
+        }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
@@ -462,6 +492,7 @@ public class FormCadConsulta extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 JFrame frame = new JFrame();
+                frame.setResizable(false);
                 frame.setVisible(true);
             }
         });
@@ -473,6 +504,7 @@ public class FormCadConsulta extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -486,6 +518,7 @@ public class FormCadConsulta extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JFormattedTextField txtData;
     private javax.swing.JFormattedTextField txtHora;
+    private javax.swing.JTextField txtIdConsulta;
     private javax.swing.JComboBox<String> txtMedico;
     private javax.swing.JComboBox<String> txtPaciente;
     private javax.swing.JFormattedTextField txtPeso;

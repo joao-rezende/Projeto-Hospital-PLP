@@ -15,12 +15,10 @@ public class Paciente extends Pessoa {
 
     private int idPaciente;
     private int numPlano;
-    private static int seq_id = 1;
 
-    public Paciente(int numPlano, String cpf, String nome, Calendar data_nasc, String fixo, String celular, Endereco endereco) {
+    public Paciente(int idPaciente, int numPlano, String cpf, String nome, Calendar data_nasc, String fixo, String celular, Endereco endereco) {
         super(cpf, nome, data_nasc, fixo, celular, endereco);
-        this.idPaciente = seq_id;
-        seq_id++;
+        this.idPaciente = idPaciente;
         this.numPlano = numPlano;
     }
 

@@ -6,24 +6,16 @@
 package visoes;
 
 import controladores.HospitalController;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import modelos.Consulta;
+import modelos.Endereco;
+import modelos.Especializacao;
 import modelos.Medico;
 import modelos.Paciente;
 
@@ -189,6 +181,7 @@ public class Hospital extends javax.swing.JFrame {
     private void btnConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaActionPerformed
         // TODO add your handling code here:
         Consultas c = new Consultas(controlador);
+        c.setResizable(false);
         c.setLocationRelativeTo(null);
         c.setVisible(true);
     }//GEN-LAST:event_btnConsultaActionPerformed
@@ -196,73 +189,28 @@ public class Hospital extends javax.swing.JFrame {
     private void btn_add_paciente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_add_paciente1ActionPerformed
         // TODO add your handling code here:
         FormCadPaciente formCadPaciente = new FormCadPaciente();
+        formCadPaciente.setResizable(false);
         formCadPaciente.setLocationRelativeTo(null);
         formCadPaciente.setVisible(true);
     }//GEN-LAST:event_btn_add_paciente1ActionPerformed
 
     private void menuSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSalvarActionPerformed
 //        // TODO add your handling code here:
-        String nomeArq = "dados_hospital.bin";
-        File arq = new File(nomeArq);
-        try {
-            arq.delete();
-            arq.createNewFile();
+        JFileChooser janelaArq = new JFileChooser();
+        int retornoJan = janelaArq.showOpenDialog(this);
 
-            try (ObjectOutputStream objSaida = new ObjectOutputStream(new FileOutputStream(arq))) {
-                List<Object> objetos = new ArrayList<>();
-                objetos.add(controlador.getConsultas());
-                objetos.add(controlador.getMedicos());
-                objetos.add(controlador.getPacientes());
-                objSaida.writeObject(objetos);
-            }
-
-        } catch (IOException erro) {
-            System.out.printf("Erro: %s", erro.getMessage());
+        if (retornoJan == JFileChooser.APPROVE_OPTION) {
+            controlador.salvar(janelaArq.getSelectedFile());
         }
-
     }//GEN-LAST:event_menuSalvarActionPerformed
 
     private void menuImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuImportarActionPerformed
         // TODO add your handling code here:
-        String nomeArq = "dados_hospital.bin";
-        try {
-            File arq = new File(nomeArq);
-            if (arq.exists()) {
-                ObjectInputStream objInput = new ObjectInputStream(new FileInputStream(arq));
-                List<Object> objetos = (List<Object>) objInput.readObject();
-                objInput.close();
+        JFileChooser janelaArq = new JFileChooser();
+        int retornoJan = janelaArq.showOpenDialog(this);
 
-                int i = 1;
-                List<Consulta> consultas;
-                List<Medico> medicos;
-                List<Paciente> pacientes;
-                for (Object objeto : objetos) {
-                    switch (i) {
-                        case 1:
-                            consultas = (List<Consulta>) objeto;
-                            for (Consulta consulta : consultas) {
-                                controlador.inserir(consulta);
-                            }
-                            break;
-                        case 2:
-                            medicos = (List<Medico>) objeto;
-                            for (Medico medico : medicos) {
-                                controlador.inserir(medico);
-                            }
-                            break;
-                        case 3:
-                            pacientes = (List<Paciente>) objeto;
-                            for (Paciente paciente : pacientes) {
-                                controlador.inserir(paciente);
-                            }
-                            break;
-                    }
-
-                    i++;
-                }
-            }
-        } catch (IOException | ClassNotFoundException erro) {
-            System.out.printf("Erro: %s", erro.getMessage());
+        if (retornoJan == JFileChooser.APPROVE_OPTION) {
+            controlador.importar(janelaArq.getSelectedFile());
         }
     }//GEN-LAST:event_menuImportarActionPerformed
 
@@ -273,9 +221,10 @@ public class Hospital extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Hospital s = new Hospital();
-                s.setLocationRelativeTo(null);
-                s.setVisible(true);
+                Hospital h = new Hospital();
+                h.setResizable(false);
+                h.setLocationRelativeTo(null);
+                h.setVisible(true);
             }
         });
     }

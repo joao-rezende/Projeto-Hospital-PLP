@@ -42,13 +42,15 @@ public class Consultas extends javax.swing.JFrame {
 
         DefaultTableModel modelo = new DefaultTableModel();
 
+        modelo.addColumn("Número");
         modelo.addColumn("Médico");
         modelo.addColumn("Paciente");
         modelo.addColumn("Data");
         modelo.addColumn("Hora");
         modelo.addColumn("Sintomas");
 
-        //Formata a data
+        int qtdCol = modelo.getColumnCount();
+
         if (consultas == null || consultas.isEmpty()) {
             modelo.addRow(new String[]{
                 "-",
@@ -58,7 +60,9 @@ public class Consultas extends javax.swing.JFrame {
                 "-"
             });
         } else {
+            //Formato da data
             SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
+            //Formato da hora
             SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm");
             for (Consulta consulta : consultas) {
                 Date dataConsulta = consulta.getDataConsulta().getTime();
@@ -66,8 +70,9 @@ public class Consultas extends javax.swing.JFrame {
                 Medico m = controlador.buscaMedico(consulta.getIdMedico());
                 Paciente p = controlador.buscaPaciente(consulta.getIdPaciente());
                 modelo.addRow(new String[]{
-                    String.valueOf(m.getNome()),
-                    String.valueOf(p.getNome()),
+                    String.valueOf(consulta.getIdConsulta()),
+                    m.getNome(),
+                    p.getNome(),
                     formatoData.format(dataConsulta),
                     formatoHora.format(horaConsulta),
                     consulta.getSintomas()
@@ -77,11 +82,14 @@ public class Consultas extends javax.swing.JFrame {
 
         tbConsultas.setModel(modelo);
 
-        tbConsultas.getColumnModel().getColumn(0).setPreferredWidth(165);
-        tbConsultas.getColumnModel().getColumn(1).setPreferredWidth(165);
-        tbConsultas.getColumnModel().getColumn(2).setPreferredWidth(100);
-        tbConsultas.getColumnModel().getColumn(3).setPreferredWidth(70);
-        tbConsultas.getColumnModel().getColumn(4).setPreferredWidth(200);
+        tbConsultas.getColumnModel().getColumn(0).setPreferredWidth(60);
+        tbConsultas.getColumnModel().getColumn(1).setPreferredWidth(150);
+        tbConsultas.getColumnModel().getColumn(2).setPreferredWidth(150);
+        tbConsultas.getColumnModel().getColumn(3).setPreferredWidth(90);
+        tbConsultas.getColumnModel().getColumn(4).setPreferredWidth(70);
+        tbConsultas.getColumnModel().getColumn(5).setPreferredWidth(180);
+
+        tbConsultas.setEnabled(false);
     }
 
     /**
@@ -114,17 +122,6 @@ public class Consultas extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Consultas");
 
-        tbConsultas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
         jScrollPane2.setViewportView(tbConsultas);
 
         btnNovaConsulta.setBackground(new java.awt.Color(92, 184, 92));
@@ -182,6 +179,7 @@ public class Consultas extends javax.swing.JFrame {
     private void btnNovaConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovaConsultaActionPerformed
         // TODO add your handling code here:
         FormCadConsulta formCadConsulta = new FormCadConsulta(controlador);
+        formCadConsulta.setResizable(false);
         formCadConsulta.setLocationRelativeTo(null);
         formCadConsulta.setVisible(true);
 
@@ -224,6 +222,7 @@ public class Consultas extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 JFrame frame = new JFrame();
+                frame.setResizable(false);
                 frame.setVisible(true);
             }
         });

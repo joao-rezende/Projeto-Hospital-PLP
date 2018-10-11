@@ -16,12 +16,10 @@ public class Medico extends Pessoa {
     private int idMedico;
     private int crm;
     private Especializacao especializacao;
-    private static int seq_id = 1;
 
-    public Medico(int crm, Especializacao especializacao, String cpf, String nome, Calendar data_nasc, String fixo, String celular, Endereco endereco) {
+    public Medico(int idMedico, int crm, Especializacao especializacao, String cpf, String nome, Calendar data_nasc, String fixo, String celular, Endereco endereco) {
         super(cpf, nome, data_nasc, fixo, celular, endereco);
-        this.idMedico = seq_id;
-        seq_id++;
+        this.idMedico = idMedico;
         this.crm = crm;
         this.especializacao = especializacao;
     }

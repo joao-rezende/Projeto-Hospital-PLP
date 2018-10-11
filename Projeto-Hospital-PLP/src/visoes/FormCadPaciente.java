@@ -5,8 +5,11 @@
  */
 package visoes;
 
+import controladores.HospitalController;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
@@ -47,6 +50,8 @@ public class FormCadPaciente extends javax.swing.JFrame {
         txtDataNasc = new javax.swing.JFormattedTextField();
         txtCelular = new javax.swing.JFormattedTextField();
         txtFixo = new javax.swing.JFormattedTextField();
+        jLabel15 = new javax.swing.JLabel();
+        txtIdPaciente = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -116,6 +121,8 @@ public class FormCadPaciente extends javax.swing.JFrame {
         }
         txtFixo.setToolTipText("Digite o telefone fixo do paciente caso tenha");
 
+        jLabel15.setText("Número do paciente*");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -123,13 +130,8 @@ public class FormCadPaciente extends javax.swing.JFrame {
             .addComponent(jSeparator1)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel4)
-                    .addComponent(txtNumPlano, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel2)
-                .addGap(348, 348, 348))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtNome)
@@ -144,7 +146,15 @@ public class FormCadPaciente extends javax.swing.JFrame {
                             .addComponent(jLabel8)
                             .addComponent(jLabel5)
                             .addComponent(txtDataNasc)
-                            .addComponent(txtCelular, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE))))
+                            .addComponent(txtCelular, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtIdPaciente))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(txtNumPlano, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -155,10 +165,14 @@ public class FormCadPaciente extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel15))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtNumPlano, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNumPlano, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtIdPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -352,6 +366,7 @@ public class FormCadPaciente extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         // TODO add your handling code here:
+        String idPaciente = txtIdPaciente.getText();
         String numPlano = txtNumPlano.getText();
         String nome = txtNome.getText();
         String cpf = txtCpf.getText();
@@ -366,10 +381,12 @@ public class FormCadPaciente extends javax.swing.JFrame {
             celular = "";
         }
 
-        if (numPlano.equals("") || nome.equals("") || cpfNaoFormatado.equals("") || data_nasc.equals("")) {
-            JOptionPane.showMessageDialog(null, "Os campos com \"*\" são obrigatórios e não podem ficar vazios", "Preencha os campos", JOptionPane.ERROR_MESSAGE);
+        if (numPlano.equals("") || nome.equals("") || cpfNaoFormatado.equals("") || data_nasc.equals("") || idPaciente.equals("")) {
+            ImageIcon icon = new ImageIcon(HospitalController.class.getResource("../imagens/erro.png"));
+            JOptionPane.showMessageDialog(null, new JLabel("Os campos com \"*\" são obrigatórios e não podem ficar vazios", icon, JLabel.LEFT), "Preencha os campos", JOptionPane.PLAIN_MESSAGE);
         } else {
-            String mensagem = " Número do plano: " + numPlano;
+            String mensagem = " Número paciente: " + idPaciente;
+            mensagem += "\n Número do plano: " + numPlano;
             mensagem += "\n Nome: " + nome;
             mensagem += "\n CPF: " + cpf;
             mensagem += "\n Data de nascimento: " + data_nasc;
@@ -388,6 +405,7 @@ public class FormCadPaciente extends javax.swing.JFrame {
             public void run() {
                 JDialog frame = new JDialog(new JFrame(), true);
                 frame.setContentPane(new FormCadPaciente());
+                frame.setResizable(false);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
@@ -404,6 +422,7 @@ public class FormCadPaciente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -425,6 +444,7 @@ public class FormCadPaciente extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField txtDataNasc;
     private javax.swing.JTextField txtEstado;
     private javax.swing.JFormattedTextField txtFixo;
+    private javax.swing.JTextField txtIdPaciente;
     private javax.swing.JTextField txtLogradouro;
     private javax.swing.JTextField txtNome;
     private javax.swing.JFormattedTextField txtNumPlano;

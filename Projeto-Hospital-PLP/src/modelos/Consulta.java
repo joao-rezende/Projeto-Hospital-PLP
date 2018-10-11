@@ -7,7 +7,7 @@ import java.util.Calendar;
  *
  * @author aluno
  */
-public class Consulta implements Serializable{
+public class Consulta implements Serializable {
 
     private int idConsulta;
     private int idMedico;
@@ -31,7 +31,7 @@ public class Consulta implements Serializable{
         this.pressao = pressao;
         this.peso = peso;
     }
-
+    
     public int getIdConsulta() {
         return idConsulta;
     }

@@ -19,7 +19,7 @@ import modelos.Paciente;
  *
  * @author desenvolvedor2
  */
-public class FormExclusaoConsulta extends javax.swing.JFrame {
+public class FormExclusaoMedicos extends javax.swing.JFrame {
 
     HospitalController controlador;
 
@@ -28,7 +28,7 @@ public class FormExclusaoConsulta extends javax.swing.JFrame {
      *
      * @param controlador
      */
-    public FormExclusaoConsulta(HospitalController controlador) {
+    public FormExclusaoMedicos(HospitalController controlador) {
         initComponents();
         this.controlador = controlador;
         panDados.setVisible(false);
@@ -352,14 +352,15 @@ public class FormExclusaoConsulta extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormExclusaoConsulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormExclusaoMedicos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormExclusaoConsulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormExclusaoMedicos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormExclusaoConsulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormExclusaoMedicos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormExclusaoConsulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormExclusaoMedicos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

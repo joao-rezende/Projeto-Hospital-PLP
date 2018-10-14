@@ -202,10 +202,10 @@ public class ListaMedicos extends javax.swing.JFrame {
 
     private void btnApagaMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagaMedicoActionPerformed
         // TODO add your handling code here:
-        FormExclusaoConsulta formExclusaoConsulta = new FormExclusaoConsulta(controlador);
-        formExclusaoConsulta.setResizable(false);
-        formExclusaoConsulta.setLocationRelativeTo(null);
-        formExclusaoConsulta.setVisible(true);
+        FormExclusaoMédico formExclusaoMédico = new FormExclusaoMédico(controlador);
+        formExclusaoMédico.setResizable(false);
+        formExclusaoMédico.setLocationRelativeTo(null);
+        formExclusaoMédico.setVisible(true);
 
         dispose();
     }//GEN-LAST:event_btnApagaMedicoActionPerformed

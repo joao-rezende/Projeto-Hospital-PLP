@@ -6,30 +6,21 @@
 package visoes;
 
 import controladores.HospitalController;
-import java.awt.Component;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.AbstractListModel;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import modelos.Endereco;
-import modelos.Enfermeiro;
 import modelos.Especializacao;
-import modelos.Funcionario;
 import modelos.Medico;
-import modelos.Paciente;
 
 /**
  *
@@ -222,30 +213,25 @@ public class FormCadMedico extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(txtComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel17)
-                                .addGap(71, 71, 71)))
+                            .addComponent(jLabel17)
+                            .addComponent(txtComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtBairro)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel18)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(txtBairro))
-                        .addContainerGap())
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(txtCep, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(txtLogradouro, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
-                                .addComponent(txtCidade, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel10)
                             .addComponent(jLabel13)
-                            .addComponent(jLabel14))
-                        .addGap(18, 18, 18)
+                            .addComponent(jLabel14)
+                            .addComponent(txtCidade, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
+                            .addComponent(txtLogradouro))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel16)
@@ -254,10 +240,10 @@ public class FormCadMedico extends javax.swing.JFrame {
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel3Layout.createSequentialGroup()
                                         .addComponent(jLabel15)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(txtEstado)
-                                    .addComponent(txtNumero))
-                                .addContainerGap())))))
+                                        .addGap(0, 73, Short.MAX_VALUE))
+                                    .addComponent(txtEstado))
+                                .addContainerGap())
+                            .addComponent(txtNumero)))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -438,6 +424,12 @@ public class FormCadMedico extends javax.swing.JFrame {
                 || txtLogradouro.getText().equals("") || txtNumero.getText().equals("") || txtBairro.getText().equals("")) {
             ImageIcon icon = new ImageIcon(HospitalController.class.getResource("../imagens/erro.png"));
             JOptionPane.showMessageDialog(null, new JLabel("Os campos com \"*\" são obrigatórios e não podem ficar vazios", icon, JLabel.LEFT), "Preencha os campos", JOptionPane.PLAIN_MESSAGE);
+        } else if (controlador.buscaFuncionario(Integer.parseInt(txtNumFuncionario.getText())) != null) {
+            ImageIcon icon = new ImageIcon(HospitalController.class.getResource("../imagens/erro.png"));
+            JOptionPane.showMessageDialog(null, new JLabel("O número do funcionário inserido já está sendo usado", icon, JLabel.LEFT), "Número inválido", JOptionPane.PLAIN_MESSAGE);
+        } else if (controlador.buscaMedico(Integer.parseInt(txtNumMedico.getText())) != null) {
+            ImageIcon icon = new ImageIcon(HospitalController.class.getResource("../imagens/erro.png"));
+            JOptionPane.showMessageDialog(null, new JLabel("O número do médico inserido já está sendo usado", icon, JLabel.LEFT), "Número inválido", JOptionPane.PLAIN_MESSAGE);
         } else {
             int cep = Integer.parseInt(txtCep.getText().replace("-", ""));
             String estado = txtEstado.getText();

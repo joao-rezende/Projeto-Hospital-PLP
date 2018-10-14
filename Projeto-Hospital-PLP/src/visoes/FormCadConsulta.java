@@ -7,12 +7,9 @@ package visoes;
 
 import controladores.HospitalController;
 import java.awt.Component;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import modelos.Consulta;
+import modelos.Funcionario;
 import modelos.Medico;
 import modelos.Paciente;
 
@@ -46,7 +44,7 @@ public class FormCadConsulta extends javax.swing.JFrame {
         this.controlador = controlador;
         preencheCombobox();
     }
-    
+
     public FormCadConsulta(HospitalController controlador, Consulta c) {
         initComponents();
         this.controlador = controlador;
@@ -54,11 +52,11 @@ public class FormCadConsulta extends javax.swing.JFrame {
     }
 
     public final void preencheCombobox() {
-        List<Medico> medicos = controlador.getMedicos();
+        List<Funcionario> funcionarios = controlador.getFuncionarios();
 
-        txtMedico.setModel(new ComboModelMedico(medicos));
+        txtFuncionario.setModel(new ComboModelFuncionario(funcionarios));
         //precisa ser exatamente após o ComboBoxModel ser aplicado
-        txtMedico.setRenderer(new MedicoComboRenderer());
+        txtFuncionario.setRenderer(new FuncionarioComboRenderer());
 
         List<Paciente> pacientes = controlador.getPacientes();
 
@@ -67,12 +65,12 @@ public class FormCadConsulta extends javax.swing.JFrame {
         txtPaciente.setRenderer(new PacienteComboRenderer());
     }
 
-    public class ComboModelMedico extends AbstractListModel implements ComboBoxModel {
+    public class ComboModelFuncionario extends AbstractListModel implements ComboBoxModel {
 
-        private final List<Medico> lista;
-        private Medico selected;
+        private final List<Funcionario> lista;
+        private Funcionario selected;
 
-        public ComboModelMedico(List<Medico> lista) {
+        public ComboModelFuncionario(List<Funcionario> lista) {
             this.lista = lista;
         }
 
@@ -88,7 +86,7 @@ public class FormCadConsulta extends javax.swing.JFrame {
 
         @Override
         public void setSelectedItem(Object Item) {
-            this.selected = (Medico) Item;
+            this.selected = (Funcionario) Item;
         }
 
         @Override
@@ -97,23 +95,23 @@ public class FormCadConsulta extends javax.swing.JFrame {
         }
 
         public Integer getIdObjetoSelecionado() {
-            return selected.getIdMedico();
+            return selected.getIdFuncionario();
         }
     }
 
-    public class MedicoComboRenderer extends DefaultListCellRenderer {
+    public class FuncionarioComboRenderer extends DefaultListCellRenderer {
 
         @Override
         public Component getListCellRendererComponent(
                 JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
-            if (value instanceof Medico) {
-                Medico medico = (Medico) value;
-                String nome = medico.getNome();
+            if (value instanceof Funcionario) {
+                Funcionario funcionario = (Funcionario) value;
+                String nome = funcionario.getNome();
                 setText(nome);
             } else if (value == null) {
-                setText("Selecione um médico:");
+                setText("Selecione um funcionário:");
             }
             return this;
         }
@@ -187,7 +185,7 @@ public class FormCadConsulta extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtMedico = new javax.swing.JComboBox<>();
+        txtFuncionario = new javax.swing.JComboBox<>();
         txtPaciente = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -226,7 +224,7 @@ public class FormCadConsulta extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Cadastro de consultas");
 
-        jLabel2.setText("Médico*");
+        jLabel2.setText("Atendido por*");
 
         jLabel3.setText("Paciente*");
 
@@ -298,7 +296,7 @@ public class FormCadConsulta extends javax.swing.JFrame {
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel2))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -364,7 +362,7 @@ public class FormCadConsulta extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtMedico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -415,7 +413,7 @@ public class FormCadConsulta extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         // TODO add your handling code here:
-        Medico m = (Medico) txtMedico.getSelectedItem();
+        Medico m = (Medico) txtFuncionario.getSelectedItem();
         Paciente p = (Paciente) txtPaciente.getSelectedItem();
         if (!txtIdConsulta.getText().equals("") && m != null && p != null && !txtData.getText().equals("") && !txtHora.getText().equals("")) {
 
@@ -462,7 +460,7 @@ public class FormCadConsulta extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
-        Consultas consultas = new Consultas(controlador);
+        ListaConsultas consultas = new ListaConsultas(controlador);
         consultas.setLocationRelativeTo(this);
         consultas.setVisible(true);
     }//GEN-LAST:event_formWindowClosed
@@ -523,9 +521,9 @@ public class FormCadConsulta extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JFormattedTextField txtData;
+    private javax.swing.JComboBox<String> txtFuncionario;
     private javax.swing.JFormattedTextField txtHora;
     private javax.swing.JTextField txtIdConsulta;
-    private javax.swing.JComboBox<String> txtMedico;
     private javax.swing.JComboBox<String> txtPaciente;
     private javax.swing.JFormattedTextField txtPeso;
     private javax.swing.JFormattedTextField txtPressao;

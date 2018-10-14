@@ -6,6 +6,9 @@
 package visoes;
 
 import controladores.HospitalController;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -32,6 +35,9 @@ public class FormExclusaoConsulta extends javax.swing.JFrame {
         initComponents();
         this.controlador = controlador;
         panDados.setVisible(false);
+        URL url = this.getClass().getResource("../imagens/hospital.png");
+        Image iconeTitulo = Toolkit.getDefaultToolkit().getImage(url);
+        this.setIconImage(iconeTitulo);
     }
 
     /**
@@ -280,7 +286,7 @@ public class FormExclusaoConsulta extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
-        Consultas c = new Consultas(controlador);
+        ListaConsultas c = new ListaConsultas(controlador);
         c.setLocationRelativeTo(null);
         c.setResizable(false);
         c.setVisible(true);
@@ -323,15 +329,16 @@ public class FormExclusaoConsulta extends javax.swing.JFrame {
     private void btnApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagarActionPerformed
         // TODO add your handling code here:
         Object[] opcoes = {"Sim", "Não"};
-        int apagar = JOptionPane.showOptionDialog(null, "Deseja excluir esta consulta?", "Exclusão", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, null, opcoes, opcoes[0]);
+        ImageIcon icon1 = new ImageIcon(HospitalController.class.getResource("../imagens/pergunta.png"));
+        int apagar = JOptionPane.showOptionDialog(null, "Deseja excluir esta consulta?", "Exclusão", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, icon1, opcoes, opcoes[0]);
         if (apagar == 0) {
             int idConsulta = Integer.parseInt(txtNumConsulta.getText());
             Consulta c = controlador.buscaConsulta(idConsulta);
             controlador.remover(c);
 
             panDados.setVisible(false);
-            ImageIcon icon = new ImageIcon(HospitalController.class.getResource("../imagens/concluido.png"));
-            JOptionPane.showMessageDialog(null, new JLabel("Excluido com sucesso", icon, JLabel.LEFT), "Concluído", JOptionPane.PLAIN_MESSAGE);
+            ImageIcon icon2 = new ImageIcon(HospitalController.class.getResource("../imagens/concluido.png"));
+            JOptionPane.showMessageDialog(null, new JLabel("Excluido com sucesso", icon2, JLabel.LEFT), "Concluído", JOptionPane.PLAIN_MESSAGE);
         }
     }//GEN-LAST:event_btnApagarActionPerformed
 

@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author Antonio, João Vitor, Liliana
  */
-public class Pessoa implements Serializable{
+public abstract class Pessoa implements Serializable{
 
     private String cpf;
     private String nome;
@@ -72,11 +72,11 @@ public class Pessoa implements Serializable{
         this.celular = celular;
     }
 
-    public Endereco getEnderecos() {
+    public Endereco getEndereco() {
         return endereco;
     }
 
-    public void setEnderecos(Endereco endereco) {
+    public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
 

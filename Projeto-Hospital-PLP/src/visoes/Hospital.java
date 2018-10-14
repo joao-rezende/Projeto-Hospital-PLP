@@ -6,18 +6,12 @@
 package visoes;
 
 import controladores.HospitalController;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.util.Calendar;
-import java.util.List;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.net.URL;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-import modelos.Consulta;
-import modelos.Endereco;
-import modelos.Especializacao;
-import modelos.Medico;
-import modelos.Paciente;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -33,6 +27,9 @@ public class Hospital extends javax.swing.JFrame {
     public Hospital() {
         controlador = new HospitalController();
         initComponents();
+        URL url = this.getClass().getResource("../imagens/hospital.png");
+        Image iconeTitulo = Toolkit.getDefaultToolkit().getImage(url);
+        this.setIconImage(iconeTitulo);
     }
 
     /**
@@ -49,6 +46,7 @@ public class Hospital extends javax.swing.JFrame {
         btnConsulta = new javax.swing.JButton();
         btn_add_paciente1 = new javax.swing.JButton();
         btnMedicos = new javax.swing.JButton();
+        btnEnfermeiros = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuSalvar = new javax.swing.JMenuItem();
@@ -100,6 +98,26 @@ public class Hospital extends javax.swing.JFrame {
         btnMedicos.setForeground(new java.awt.Color(255, 255, 255));
         btnMedicos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/medico.png"))); // NOI18N
         btnMedicos.setText("Médicos");
+        btnMedicos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMedicosActionPerformed(evt);
+            }
+        });
+
+        btnEnfermeiros.setBackground(new java.awt.Color(51, 122, 183));
+        btnEnfermeiros.setForeground(new java.awt.Color(255, 255, 255));
+        btnEnfermeiros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/enfermeiro.png"))); // NOI18N
+        btnEnfermeiros.setText("Enfermeiros");
+        btnEnfermeiros.setToolTipText("Adicionar um novo paciente");
+        btnEnfermeiros.setBorder(null);
+        btnEnfermeiros.setMargin(new java.awt.Insets(14, 14, 14, 14));
+        btnEnfermeiros.setMinimumSize(new java.awt.Dimension(103, 17));
+        btnEnfermeiros.setPreferredSize(new java.awt.Dimension(130, 35));
+        btnEnfermeiros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnfermeirosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -107,16 +125,17 @@ public class Hospital extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnEnfermeiros, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                            .addComponent(btnMedicos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_add_paciente1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnConsulta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(82, 82, 82)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(btnMedicos, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(btn_add_paciente1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(80, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -127,6 +146,8 @@ public class Hospital extends javax.swing.JFrame {
                 .addComponent(btn_add_paciente1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60)
                 .addComponent(btnMedicos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60)
+                .addComponent(btnEnfermeiros, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60)
                 .addComponent(btnConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(60, Short.MAX_VALUE))
@@ -180,7 +201,7 @@ public class Hospital extends javax.swing.JFrame {
 
     private void btnConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaActionPerformed
         // TODO add your handling code here:
-        Consultas c = new Consultas(controlador);
+        ListaConsultas c = new ListaConsultas(controlador);
         c.setResizable(false);
         c.setLocationRelativeTo(null);
         c.setVisible(true);
@@ -197,10 +218,15 @@ public class Hospital extends javax.swing.JFrame {
     private void menuSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSalvarActionPerformed
 //        // TODO add your handling code here:
         JFileChooser janelaArq = new JFileChooser();
-        int retornoJan = janelaArq.showOpenDialog(this);
+        int retornoJan = janelaArq.showSaveDialog(this);
 
         if (retornoJan == JFileChooser.APPROVE_OPTION) {
-            controlador.salvar(janelaArq.getSelectedFile());
+            Object[] opcoes = {"Sim", "Não"};
+            ImageIcon icon1 = new ImageIcon(HospitalController.class.getResource("../imagens/pergunta.png"));
+            int confirma = JOptionPane.showOptionDialog(null, "Deseja salvar os dados em " + janelaArq.getSelectedFile().getName() + " ?", "Confirmação", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, icon1, opcoes, opcoes[0]);
+            if (confirma == 0) {
+                controlador.salvar(janelaArq.getSelectedFile());
+            }
         }
     }//GEN-LAST:event_menuSalvarActionPerformed
 
@@ -213,6 +239,20 @@ public class Hospital extends javax.swing.JFrame {
             controlador.importar(janelaArq.getSelectedFile());
         }
     }//GEN-LAST:event_menuImportarActionPerformed
+
+    private void btnEnfermeirosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsulta1ActionPerformed
+        // TODO add your handling code here:
+        ListaEnfermeiros listaEnf = new ListaEnfermeiros(controlador);
+        listaEnf.setLocationRelativeTo(null);
+        listaEnf.setVisible(true);
+    }//GEN-LAST:event_btnConsulta1ActionPerformed
+
+    private void btnMedicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMedicosActionPerformed
+        // TODO add your handling code here:
+        ListaMedicos listaMedicos = new ListaMedicos(controlador);
+        listaMedicos.setLocationRelativeTo(null);
+        listaMedicos.setVisible(true);
+    }//GEN-LAST:event_btnMedicosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -231,6 +271,7 @@ public class Hospital extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConsulta;
+    private javax.swing.JButton btnEnfermeiros;
     private javax.swing.JButton btnMedicos;
     private javax.swing.JButton btn_add_paciente1;
     private javax.swing.JLabel jLabel1;

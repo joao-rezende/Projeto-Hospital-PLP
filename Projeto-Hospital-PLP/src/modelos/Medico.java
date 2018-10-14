@@ -11,14 +11,14 @@ import java.util.Calendar;
  *
  * @author aluno
  */
-public class Medico extends Pessoa {
+public class Medico extends Funcionario {
 
     private int idMedico;
     private int crm;
     private Especializacao especializacao;
 
-    public Medico(int idMedico, int crm, Especializacao especializacao, String cpf, String nome, Calendar data_nasc, String fixo, String celular, Endereco endereco) {
-        super(cpf, nome, data_nasc, fixo, celular, endereco);
+    public Medico(int idMedico, int crm, Especializacao especializacao, int idFuncionario, double salario, String cpf, String nome, Calendar data_nasc, String fixo, String celular, Endereco endereco) {
+        super(idFuncionario, Cargo.MEDICO, salario, cpf, nome, data_nasc, fixo, celular, endereco);
         this.idMedico = idMedico;
         this.crm = crm;
         this.especializacao = especializacao;

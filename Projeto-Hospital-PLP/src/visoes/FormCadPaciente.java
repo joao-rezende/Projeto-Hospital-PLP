@@ -6,12 +6,14 @@
 package visoes;
 
 import controladores.HospitalController;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import modelos.Paciente;
 
 /**
  *
@@ -24,10 +26,9 @@ public class FormCadPaciente extends javax.swing.JFrame {
      */
     public FormCadPaciente() {
         initComponents();
-    }
-    
-    public FormCadPaciente(Paciente p) {
-        initComponents();
+        URL url = this.getClass().getResource("../imagens/hospital.png");
+        Image iconeTitulo = Toolkit.getDefaultToolkit().getImage(url);
+        this.setIconImage(iconeTitulo);
     }
 
     /**

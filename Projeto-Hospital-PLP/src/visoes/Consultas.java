@@ -195,7 +195,7 @@ public class Consultas extends javax.swing.JFrame {
 
     private void btnNovaConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovaConsultaActionPerformed
         // TODO add your handling code here:
-        FormCadMedicos formCadConsulta = new FormCadMedicos(controlador);
+        FormCadConsulta formCadConsulta = new FormCadConsulta(controlador);
         formCadConsulta.setResizable(false);
         formCadConsulta.setLocationRelativeTo(null);
         formCadConsulta.setVisible(true);
@@ -210,7 +210,7 @@ public class Consultas extends javax.swing.JFrame {
 
     private void btnApagaConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagaConsultaActionPerformed
         // TODO add your handling code here:
-        FormExclusaoMedicos formExclusaoConsulta = new FormExclusaoMedicos(controlador);
+        FormExclusaoConsulta formExclusaoConsulta = new FormExclusaoConsulta(controlador);
         formExclusaoConsulta.setResizable(false);
         formExclusaoConsulta.setLocationRelativeTo(null);
         formExclusaoConsulta.setVisible(true);

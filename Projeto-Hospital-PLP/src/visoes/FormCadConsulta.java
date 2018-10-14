@@ -32,7 +32,7 @@ import modelos.Paciente;
  *
  * @author desenvolvedor2
  */
-public class FormCadMedicos extends javax.swing.JFrame {
+public class FormCadConsulta extends javax.swing.JFrame {
 
     private final HospitalController controlador;
 
@@ -41,13 +41,13 @@ public class FormCadMedicos extends javax.swing.JFrame {
      *
      * @param controlador
      */
-    public FormCadMedicos(HospitalController controlador) {
+    public FormCadConsulta(HospitalController controlador) {
         initComponents();
         this.controlador = controlador;
         preencheCombobox();
     }
     
-    public FormCadMedicos(HospitalController controlador, Consulta c) {
+    public FormCadConsulta(HospitalController controlador, Consulta c) {
         initComponents();
         this.controlador = controlador;
         preencheCombobox();
@@ -427,7 +427,7 @@ public class FormCadMedicos extends javax.swing.JFrame {
                 data.setTime(formatoData.parse(txtData.getText()));
                 hora.setTime(formatoHora.parse(txtHora.getText()));
             } catch (ParseException ex) {
-                Logger.getLogger(FormCadMedicos.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FormCadConsulta.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             int idConsulta = Integer.parseInt(txtIdConsulta.getText());
@@ -484,15 +484,14 @@ public class FormCadMedicos extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormCadMedicos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormCadConsulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormCadMedicos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormCadConsulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormCadMedicos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormCadConsulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormCadMedicos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormCadConsulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

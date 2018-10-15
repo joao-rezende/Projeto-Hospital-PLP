@@ -6,6 +6,7 @@
 package visoes;
 
 import controladores.HospitalController;
+import java.awt.Color;
 import java.awt.Component;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,6 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import modelos.Consulta;
+import modelos.Enfermeiro;
 import modelos.Funcionario;
 import modelos.Medico;
 import modelos.Paciente;
@@ -40,12 +42,6 @@ public class FormCadConsulta extends javax.swing.JFrame {
      * @param controlador
      */
     public FormCadConsulta(HospitalController controlador) {
-        initComponents();
-        this.controlador = controlador;
-        preencheCombobox();
-    }
-
-    public FormCadConsulta(HospitalController controlador, Consulta c) {
         initComponents();
         this.controlador = controlador;
         preencheCombobox();
@@ -204,6 +200,9 @@ public class FormCadConsulta extends javax.swing.JFrame {
         btnSalvar = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         txtIdConsulta = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtDiagnostico = new javax.swing.JTextArea();
 
         jLabel9.setText("jLabel9");
 
@@ -227,6 +226,12 @@ public class FormCadConsulta extends javax.swing.JFrame {
         jLabel2.setText("Atendido por*");
 
         jLabel3.setText("Paciente*");
+
+        txtFuncionario.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                txtFuncionarioItemStateChanged(evt);
+            }
+        });
 
         jLabel4.setText("Data*");
 
@@ -255,7 +260,7 @@ public class FormCadConsulta extends javax.swing.JFrame {
         txtPeso.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
 
         txtSintomas.setColumns(20);
-        txtSintomas.setRows(5);
+        txtSintomas.setRows(3);
         jScrollPane1.setViewportView(txtSintomas);
 
         btnCancelar.setBackground(new java.awt.Color(217, 83, 79));
@@ -277,6 +282,19 @@ public class FormCadConsulta extends javax.swing.JFrame {
         });
 
         jLabel11.setText("Número da consulta*");
+
+        jLabel12.setText("Diagnóstico");
+
+        jScrollPane2.setEnabled(false);
+
+        txtDiagnostico.setBackground(new java.awt.Color(238, 238, 238));
+        txtDiagnostico.setColumns(20);
+        txtDiagnostico.setRows(3);
+        txtDiagnostico.setToolTipText("Selecione um médico para liberar o campo");
+        txtDiagnostico.setWrapStyleWord(true);
+        txtDiagnostico.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtDiagnostico.setEnabled(false);
+        jScrollPane2.setViewportView(txtDiagnostico);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -334,15 +352,23 @@ public class FormCadConsulta extends javax.swing.JFrame {
                                         .addComponent(jLabel8)))))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSalvar)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtIdConsulta))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnCancelar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnSalvar)))
                         .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtIdConsulta))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addComponent(jLabel12)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane2)
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -385,11 +411,15 @@ public class FormCadConsulta extends javax.swing.JFrame {
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -400,7 +430,7 @@ public class FormCadConsulta extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 505, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -413,9 +443,9 @@ public class FormCadConsulta extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         // TODO add your handling code here:
-        Medico m = (Medico) txtFuncionario.getSelectedItem();
+        Funcionario f = (Funcionario) txtFuncionario.getSelectedItem();
         Paciente p = (Paciente) txtPaciente.getSelectedItem();
-        if (!txtIdConsulta.getText().equals("") && m != null && p != null && !txtData.getText().equals("") && !txtHora.getText().equals("")) {
+        if (!txtIdConsulta.getText().equals("") && f != null && p != null && !txtData.getText().equals("") && !txtHora.getText().equals("")) {
 
             Calendar data = Calendar.getInstance();
             Calendar hora = Calendar.getInstance();
@@ -443,7 +473,9 @@ public class FormCadConsulta extends javax.swing.JFrame {
                 double temp = Double.parseDouble(str_temp.replace(",", "."));
                 double peso = Double.parseDouble(str_peso.replace(",", "."));
 
-                Consulta c = new Consulta(idConsulta, m.getIdMedico(), p.getIdPaciente(), data, hora, sintomas, temp, str_pressao, peso);
+                String diagnostico = txtDiagnostico.getText();
+
+                Consulta c = new Consulta(idConsulta, f.getIdFuncionario(), p.getIdPaciente(), data, hora, sintomas, temp, str_pressao, peso, diagnostico);
 
                 controlador.inserir(c);
 
@@ -465,42 +497,17 @@ public class FormCadConsulta extends javax.swing.JFrame {
         consultas.setVisible(true);
     }//GEN-LAST:event_formWindowClosed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormCadConsulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormCadConsulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormCadConsulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormCadConsulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    private void txtFuncionarioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_txtFuncionarioItemStateChanged
+        // TODO add your handling code here:
+        if (txtFuncionario.getSelectedItem() instanceof Medico) {
+            txtDiagnostico.setBackground(Color.WHITE);
+            txtDiagnostico.setEnabled(true);
+        } else if (txtFuncionario.getSelectedItem() instanceof Enfermeiro) {
+            txtDiagnostico.setBackground(Color.getColor("EEEEEE"));
+            txtDiagnostico.setText("");
+            txtDiagnostico.setEnabled(false);
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                JFrame frame = new JFrame();
-                frame.setResizable(false);
-                frame.setVisible(true);
-            }
-        });
-    }
+    }//GEN-LAST:event_txtFuncionarioItemStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
@@ -509,6 +516,7 @@ public class FormCadConsulta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -519,8 +527,10 @@ public class FormCadConsulta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JFormattedTextField txtData;
+    private javax.swing.JTextArea txtDiagnostico;
     private javax.swing.JComboBox<String> txtFuncionario;
     private javax.swing.JFormattedTextField txtHora;
     private javax.swing.JTextField txtIdConsulta;

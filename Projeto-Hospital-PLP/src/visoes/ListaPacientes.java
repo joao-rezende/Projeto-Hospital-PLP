@@ -10,27 +10,16 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.math.BigDecimal;
 import java.net.URL;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.SimpleDateFormat;
-import modelos.Consulta;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
-import modelos.Enfermeiro;
-import modelos.Especializacao;
-import modelos.Medico;
 import modelos.Paciente;
 
 /**
  *
  * @author desenvolvedor2
  */
-public class ListaEnfermeiros extends javax.swing.JFrame {
+public class ListaPacientes extends javax.swing.JFrame {
 
     private final HospitalController controlador;
 
@@ -39,7 +28,7 @@ public class ListaEnfermeiros extends javax.swing.JFrame {
      *
      * @param controlador
      */
-    public ListaEnfermeiros(HospitalController controlador) {
+    public ListaPacientes(HospitalController controlador) {
         initComponents();
         this.controlador = controlador;
         preencherTabela();
@@ -48,51 +37,43 @@ public class ListaEnfermeiros extends javax.swing.JFrame {
         this.setIconImage(iconeTitulo);
     }
 
-    ListaEnfermeiros() {
+    ListaPacientes() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public final void preencherTabela() {
-        List<Enfermeiro> enfermeiros = controlador.getEnfermeiros();
+        List<Paciente> pacientes = controlador.getPacientes();
 
         DefaultTableModel modelo = new DefaultTableModel();
 
         modelo.addColumn("Número");
-        modelo.addColumn("COREN");
+        modelo.addColumn("Número do plano");
         modelo.addColumn("CPF");
         modelo.addColumn("Nome");
-        modelo.addColumn("Salário");
 
-        int qtdCol = modelo.getColumnCount();
-
-        if (enfermeiros == null || enfermeiros.isEmpty()) {
+        if (pacientes == null || pacientes.isEmpty()) {
             modelo.addRow(new String[]{
-                "-",
                 "-",
                 "-",
                 "-",
                 "-"
             });
         } else {
-            for (Enfermeiro enfermeiro : enfermeiros) {
-                BigDecimal salarioFormatado = new BigDecimal(enfermeiro.getSalario());
+            for (Paciente paciente : pacientes) {
                 modelo.addRow(new String[]{
-                    String.valueOf(enfermeiro.getIdEnfermeiro()),
-                    String.valueOf(enfermeiro.getCoren()),
-                    String.valueOf(enfermeiro.getCpf()),
-                    enfermeiro.getNome(),
-                    "R$ " + salarioFormatado.setScale(2, BigDecimal.ROUND_HALF_UP)
-                });
+                    String.valueOf(paciente.getIdPaciente()),
+                    String.valueOf(paciente.getNumPlano()),
+                    String.valueOf(paciente.getCpf()),
+                    paciente.getNome(),});
             }
         }
 
         tbConsultas.setModel(modelo);
 
         tbConsultas.getColumnModel().getColumn(0).setPreferredWidth(60);
-        tbConsultas.getColumnModel().getColumn(1).setPreferredWidth(140);
+        tbConsultas.getColumnModel().getColumn(1).setPreferredWidth(120);
         tbConsultas.getColumnModel().getColumn(2).setPreferredWidth(110);
-        tbConsultas.getColumnModel().getColumn(3).setPreferredWidth(270);
-        tbConsultas.getColumnModel().getColumn(4).setPreferredWidth(120);
+        tbConsultas.getColumnModel().getColumn(3).setPreferredWidth(200);
 
         tbConsultas.setEnabled(false);
     }
@@ -111,8 +92,8 @@ public class ListaEnfermeiros extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbConsultas = new javax.swing.JTable();
-        btnNovoEnfermeiro = new javax.swing.JButton();
-        btnApagaConsulta = new javax.swing.JButton();
+        btnNovoPaciente = new javax.swing.JButton();
+        btnApagaPaciente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Hospital PLP - Enfermeiros");
@@ -126,25 +107,25 @@ public class ListaEnfermeiros extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Enfermeiros");
+        jLabel2.setText("Pacientes");
 
         jScrollPane2.setViewportView(tbConsultas);
 
-        btnNovoEnfermeiro.setBackground(new java.awt.Color(92, 184, 92));
-        btnNovoEnfermeiro.setForeground(new java.awt.Color(255, 255, 255));
-        btnNovoEnfermeiro.setText("Novo enfermeiro");
-        btnNovoEnfermeiro.addActionListener(new java.awt.event.ActionListener() {
+        btnNovoPaciente.setBackground(new java.awt.Color(92, 184, 92));
+        btnNovoPaciente.setForeground(new java.awt.Color(255, 255, 255));
+        btnNovoPaciente.setText("Novo paciente");
+        btnNovoPaciente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNovoEnfermeiroActionPerformed(evt);
+                btnNovoPacienteActionPerformed(evt);
             }
         });
 
-        btnApagaConsulta.setBackground(new java.awt.Color(217, 83, 79));
-        btnApagaConsulta.setForeground(new java.awt.Color(255, 255, 255));
-        btnApagaConsulta.setText("Apagar enfermeiro");
-        btnApagaConsulta.addActionListener(new java.awt.event.ActionListener() {
+        btnApagaPaciente.setBackground(new java.awt.Color(217, 83, 79));
+        btnApagaPaciente.setForeground(new java.awt.Color(255, 255, 255));
+        btnApagaPaciente.setText("Apagar paciente");
+        btnApagaPaciente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnApagaConsultaActionPerformed(evt);
+                btnApagaPacienteActionPerformed(evt);
             }
         });
 
@@ -159,9 +140,9 @@ public class ListaEnfermeiros extends javax.swing.JFrame {
                     .addComponent(jSeparator1)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnApagaConsulta)
+                        .addComponent(btnApagaPaciente)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnNovoEnfermeiro)))
+                        .addComponent(btnNovoPaciente)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -173,8 +154,8 @@ public class ListaEnfermeiros extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnNovoEnfermeiro)
-                    .addComponent(btnApagaConsulta))
+                    .addComponent(btnNovoPaciente)
+                    .addComponent(btnApagaPaciente))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -194,34 +175,34 @@ public class ListaEnfermeiros extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnNovoEnfermeiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoEnfermeiroActionPerformed
+    private void btnNovoPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoPacienteActionPerformed
         // TODO add your handling code here:
-        FormCadEnfermeiro formCadEnfermeiro = new FormCadEnfermeiro(controlador);
-        formCadEnfermeiro.setResizable(false);
-        formCadEnfermeiro.setLocationRelativeTo(null);
-        formCadEnfermeiro.setVisible(true);
+        FormCadPaciente formCadPaciente = new FormCadPaciente(controlador);
+        formCadPaciente.setResizable(false);
+        formCadPaciente.setLocationRelativeTo(null);
+        formCadPaciente.setVisible(true);
 
         dispose();
-    }//GEN-LAST:event_btnNovoEnfermeiroActionPerformed
+    }//GEN-LAST:event_btnNovoPacienteActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
 
     }//GEN-LAST:event_formWindowClosed
 
-    private void btnApagaConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagaConsultaActionPerformed
+    private void btnApagaPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagaPacienteActionPerformed
         // TODO add your handling code here:
-        FormExclusaoEnfermeiro formExclusaoEnfermeiro = new FormExclusaoEnfermeiro(controlador);
-        formExclusaoEnfermeiro.setResizable(false);
-        formExclusaoEnfermeiro.setLocationRelativeTo(null);
-        formExclusaoEnfermeiro.setVisible(true);
+        FormExclusaoPaciente formExclusaoPaciente = new FormExclusaoPaciente(controlador);
+        formExclusaoPaciente.setResizable(false);
+        formExclusaoPaciente.setLocationRelativeTo(null);
+        formExclusaoPaciente.setVisible(true);
 
         dispose();
-    }//GEN-LAST:event_btnApagaConsultaActionPerformed
+    }//GEN-LAST:event_btnApagaPacienteActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnApagaConsulta;
-    private javax.swing.JButton btnNovoEnfermeiro;
+    private javax.swing.JButton btnApagaPaciente;
+    private javax.swing.JButton btnNovoPaciente;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;

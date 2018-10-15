@@ -8,6 +8,7 @@ package visoes;
 import controladores.HospitalController;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import javax.swing.ImageIcon;
@@ -15,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import modelos.Consulta;
+import modelos.Funcionario;
 import modelos.Medico;
 import modelos.Paciente;
 
@@ -40,6 +42,40 @@ public class FormExclusaoConsulta extends javax.swing.JFrame {
         this.setIconImage(iconeTitulo);
     }
 
+    public void buscaConsulta() {
+        if (txtNumConsulta.getText().equals("")) {
+            ImageIcon icon = new ImageIcon(HospitalController.class.getResource("../imagens/erro.png"));
+            JOptionPane.showMessageDialog(null, new JLabel("Digite algum número para poder buscar", icon, JLabel.LEFT), "Campo vazio", JOptionPane.PLAIN_MESSAGE);
+            panDados.setVisible(false);
+        } else {
+            int idConsulta = Integer.parseInt(txtNumConsulta.getText());
+            Consulta c = controlador.buscaConsulta(idConsulta);
+            if (c == null) {
+                ImageIcon icon = new ImageIcon(HospitalController.class.getResource("../imagens/erro.png"));
+                JOptionPane.showMessageDialog(null, new JLabel("O número buscado não corresponde a nenhuma consulta", icon, JLabel.LEFT), "Número inválido", JOptionPane.PLAIN_MESSAGE);
+                panDados.setVisible(false);
+            } else {
+                SimpleDateFormat formatoD = new SimpleDateFormat("dd/MM/yyyy");
+                SimpleDateFormat formatoH = new SimpleDateFormat("HH:mm");
+
+                Funcionario f = controlador.buscaFuncionario(c.getIdFuncionario());
+                Paciente p = controlador.buscaPaciente(c.getIdPaciente());
+
+                lblFuncionario.setText(f.getNome());
+                lblPaciente.setText(p.getNome());
+                lblData.setText(formatoD.format(c.getDataConsulta().getTime()));
+                lblHora.setText(formatoH.format(c.getHoraConsulta().getTime()));
+                lblTemperatura.setText(String.valueOf(c.getTemperatura()).replace(".", ","));
+                lblPeso.setText(String.valueOf(c.getPeso()).replace(".", ","));
+                lblPressao.setText(c.getPressao());
+                lblSintomas.setText(c.getSintomas());
+                lblDiagnostico.setText(c.getDiagnostico());
+
+                panDados.setVisible(true);
+            }
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -58,7 +94,7 @@ public class FormExclusaoConsulta extends javax.swing.JFrame {
         btnBuscar = new javax.swing.JButton();
         panDados = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        lblMedico = new javax.swing.JLabel();
+        lblFuncionario = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         lblPaciente = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -74,6 +110,8 @@ public class FormExclusaoConsulta extends javax.swing.JFrame {
         lblTemperatura = new javax.swing.JLabel();
         lblPressao = new javax.swing.JLabel();
         btnApagar = new javax.swing.JButton();
+        lblDiagnostico = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -87,6 +125,7 @@ public class FormExclusaoConsulta extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Hospital PLP - Consultas");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -101,6 +140,12 @@ public class FormExclusaoConsulta extends javax.swing.JFrame {
 
         jLabel2.setText("Número da consulta");
 
+        txtNumConsulta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtNumConsultaKeyPressed(evt);
+            }
+        });
+
         btnBuscar.setBackground(new java.awt.Color(51, 122, 183));
         btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/busca.png"))); // NOI18N
@@ -112,10 +157,11 @@ public class FormExclusaoConsulta extends javax.swing.JFrame {
         });
 
         panDados.setBackground(new java.awt.Color(255, 255, 255));
+        panDados.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(99, 130, 191), 1, true), "Dados", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(99, 130, 191))); // NOI18N
 
-        jLabel3.setText("Médico:");
+        jLabel3.setText("Atendimento realizado por:");
 
-        lblMedico.setText("jLabel4");
+        lblFuncionario.setText("jLabel4");
 
         jLabel4.setText("Paciente:");
 
@@ -141,6 +187,7 @@ public class FormExclusaoConsulta extends javax.swing.JFrame {
 
         lblSintomas.setText("jLabel15");
         lblSintomas.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        lblSintomas.setMaximumSize(new java.awt.Dimension(426, 15));
 
         lblTemperatura.setText("37.9");
 
@@ -155,79 +202,92 @@ public class FormExclusaoConsulta extends javax.swing.JFrame {
             }
         });
 
+        lblDiagnostico.setText("jLabel15");
+        lblDiagnostico.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        jLabel5.setText("Diagnóstico");
+
         javax.swing.GroupLayout panDadosLayout = new javax.swing.GroupLayout(panDados);
         panDados.setLayout(panDadosLayout);
         panDadosLayout.setHorizontalGroup(
             panDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panDadosLayout.createSequentialGroup()
                 .addGroup(panDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel6))
-                .addGap(5, 5, 5)
-                .addGroup(panDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblMedico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblPaciente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panDadosLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(lblPressao, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panDadosLayout.createSequentialGroup()
-                        .addComponent(lblData)
-                        .addGap(0, 0, Short.MAX_VALUE))))
-            .addComponent(lblSintomas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(panDadosLayout.createSequentialGroup()
-                .addGroup(panDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panDadosLayout.createSequentialGroup()
-                        .addGroup(panDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(panDadosLayout.createSequentialGroup()
-                                .addComponent(jLabel13)
-                                .addGap(31, 31, 31)
-                                .addComponent(lblPeso)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel10))
-                            .addComponent(jLabel8))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addContainerGap()
                         .addGroup(panDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblHora)
+                            .addComponent(lblPaciente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblDiagnostico, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panDadosLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btnApagar))
                             .addGroup(panDadosLayout.createSequentialGroup()
-                                .addComponent(lblTemperatura, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(2, 2, 2)
-                                .addComponent(jLabel12)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblPressao))))
-                    .addComponent(jLabel14))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(panDadosLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnApagar))
+                                .addGroup(panDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addGroup(panDadosLayout.createSequentialGroup()
+                                        .addGroup(panDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblData, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel6)
+                                            .addComponent(jLabel13)
+                                            .addComponent(lblPeso, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(panDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jLabel8)
+                                            .addComponent(lblHora, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                                            .addComponent(jLabel10)
+                                            .addComponent(lblTemperatura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel12))
+                                    .addComponent(jLabel14)
+                                    .addComponent(jLabel5))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(lblFuncionario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblSintomas, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
         );
         panDadosLayout.setVerticalGroup(
             panDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panDadosLayout.createSequentialGroup()
-                .addGroup(panDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(lblMedico))
+                .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(lblPaciente))
+                .addComponent(lblFuncionario)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblPaciente)
+                .addGap(14, 14, 14)
                 .addGroup(panDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(lblData)
-                    .addComponent(jLabel8)
-                    .addComponent(lblHora))
+                    .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel13)
-                    .addComponent(jLabel10)
-                    .addComponent(lblPeso)
+                    .addComponent(lblData)
+                    .addComponent(lblHora))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel13))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPressao)
                     .addComponent(lblTemperatura)
-                    .addComponent(lblPressao))
+                    .addComponent(lblPeso))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblSintomas, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addComponent(btnApagar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblDiagnostico, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnApagar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -237,16 +297,15 @@ public class FormExclusaoConsulta extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panDados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jSeparator1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtNumConsulta))
-                        .addGap(160, 160, 160)
-                        .addComponent(btnBuscar)
-                        .addGap(0, 23, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnBuscar))
+                    .addComponent(panDados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -263,7 +322,7 @@ public class FormExclusaoConsulta extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtNumConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(panDados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -272,9 +331,7 @@ public class FormExclusaoConsulta extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -294,36 +351,7 @@ public class FormExclusaoConsulta extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        if (txtNumConsulta.getText().equals("")) {
-            ImageIcon icon = new ImageIcon(HospitalController.class.getResource("../imagens/erro.png"));
-            JOptionPane.showMessageDialog(null, new JLabel("Digite algum número para poder buscar", icon, JLabel.LEFT), "Campo vazio", JOptionPane.PLAIN_MESSAGE);
-            panDados.setVisible(false);
-        } else {
-            int idConsulta = Integer.parseInt(txtNumConsulta.getText());
-            Consulta c = controlador.buscaConsulta(idConsulta);
-            if (c == null) {
-                ImageIcon icon = new ImageIcon(HospitalController.class.getResource("../imagens/erro.png"));
-                JOptionPane.showMessageDialog(null, new JLabel("O número buscado não corresponde a nenhuma consulta", icon, JLabel.LEFT), "Número inválido", JOptionPane.PLAIN_MESSAGE);
-                panDados.setVisible(false);
-            } else {
-                SimpleDateFormat formatoD = new SimpleDateFormat("dd/MM/yyyy");
-                SimpleDateFormat formatoH = new SimpleDateFormat("HH:mm");
-
-                Medico m = controlador.buscaMedico(c.getIdMedico());
-                Paciente p = controlador.buscaPaciente(c.getIdPaciente());
-
-                lblMedico.setText(m.getNome());
-                lblPaciente.setText(p.getNome());
-                lblData.setText(formatoD.format(c.getDataConsulta().getTime()));
-                lblHora.setText(formatoH.format(c.getHoraConsulta().getTime()));
-                lblTemperatura.setText(String.valueOf(c.getTemperatura()).replace(".", ","));
-                lblPeso.setText(String.valueOf(c.getPeso()).replace(".", ","));
-                lblPressao.setText(c.getPressao());
-                lblSintomas.setText(c.getSintomas());
-
-                panDados.setVisible(true);
-            }
-        }
+        buscaConsulta();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagarActionPerformed
@@ -342,43 +370,12 @@ public class FormExclusaoConsulta extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnApagarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormExclusaoConsulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormExclusaoConsulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormExclusaoConsulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormExclusaoConsulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    private void txtNumConsultaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumConsultaKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            buscaConsulta();
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                JFrame frame = new JFrame();
-                frame.setResizable(false);
-                frame.setLocationRelativeTo(null);
-                frame.setVisible(true);
-            }
-        });
-    }
+    }//GEN-LAST:event_txtNumConsultaKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnApagar;
@@ -391,14 +388,16 @@ public class FormExclusaoConsulta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblData;
+    private javax.swing.JLabel lblDiagnostico;
+    private javax.swing.JLabel lblFuncionario;
     private javax.swing.JLabel lblHora;
-    private javax.swing.JLabel lblMedico;
     private javax.swing.JLabel lblPaciente;
     private javax.swing.JLabel lblPeso;
     private javax.swing.JLabel lblPressao;

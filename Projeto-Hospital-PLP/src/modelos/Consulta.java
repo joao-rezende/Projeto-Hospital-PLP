@@ -10,19 +10,20 @@ import java.util.Calendar;
 public class Consulta implements Serializable {
 
     private int idConsulta;
-    private int idMedico;
+    private int idFuncionario;
     private int idPaciente;
     private Calendar dataConsulta;
     private Calendar horaConsulta;
     private String sintomas;
+    private String diagnostico;
     private double temperatura;
     private String pressao;
     private double peso;
 
-    public Consulta(int idConsulta, int idMedico, int idPaciente, Calendar dataConsulta, Calendar horaConsulta, String sintomas, double temperatura,
-            String pressao, double peso) {
+    public Consulta(int idConsulta, int idFuncionario, int idPaciente, Calendar dataConsulta, Calendar horaConsulta, String sintomas, double temperatura,
+            String pressao, double peso, String diagnostico) {
         this.idConsulta = idConsulta;
-        this.idMedico = idMedico;
+        this.idFuncionario = idFuncionario;
         this.idPaciente = idPaciente;
         this.dataConsulta = dataConsulta;
         this.horaConsulta = horaConsulta;
@@ -30,8 +31,9 @@ public class Consulta implements Serializable {
         this.temperatura = temperatura;
         this.pressao = pressao;
         this.peso = peso;
+        this.diagnostico = diagnostico;
     }
-    
+
     public int getIdConsulta() {
         return idConsulta;
     }
@@ -40,12 +42,12 @@ public class Consulta implements Serializable {
         this.idConsulta = idConsulta;
     }
 
-    public int getIdMedico() {
-        return idMedico;
+    public int getIdFuncionario() {
+        return idFuncionario;
     }
 
-    public void setIdMedico(int idMedico) {
-        this.idMedico = idMedico;
+    public void setIdFuncionario(int idFuncionario) {
+        this.idFuncionario = idFuncionario;
     }
 
     public int getIdPaciente() {
@@ -102,6 +104,14 @@ public class Consulta implements Serializable {
 
     public void setPeso(double peso) {
         this.peso = peso;
+    }
+
+    public String getDiagnostico() {
+        return diagnostico;
+    }
+
+    public void setDiagnostico(String diagnostico) {
+        this.diagnostico = diagnostico;
     }
 
 }

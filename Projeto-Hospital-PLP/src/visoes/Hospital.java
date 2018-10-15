@@ -44,7 +44,7 @@ public class Hospital extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btnConsulta = new javax.swing.JButton();
-        btn_add_paciente1 = new javax.swing.JButton();
+        btnPacientes = new javax.swing.JButton();
         btnMedicos = new javax.swing.JButton();
         btnEnfermeiros = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -78,19 +78,19 @@ public class Hospital extends javax.swing.JFrame {
             }
         });
 
-        btn_add_paciente1.setBackground(new java.awt.Color(51, 122, 183));
-        btn_add_paciente1.setForeground(new java.awt.Color(255, 255, 255));
-        btn_add_paciente1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/paciente.png"))); // NOI18N
-        btn_add_paciente1.setText("Pacientes");
-        btn_add_paciente1.setToolTipText("Adicionar um novo paciente");
-        btn_add_paciente1.setBorder(null);
-        btn_add_paciente1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        btn_add_paciente1.setMargin(new java.awt.Insets(14, 14, 14, 14));
-        btn_add_paciente1.setMinimumSize(new java.awt.Dimension(103, 17));
-        btn_add_paciente1.setPreferredSize(new java.awt.Dimension(130, 35));
-        btn_add_paciente1.addActionListener(new java.awt.event.ActionListener() {
+        btnPacientes.setBackground(new java.awt.Color(51, 122, 183));
+        btnPacientes.setForeground(new java.awt.Color(255, 255, 255));
+        btnPacientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/paciente.png"))); // NOI18N
+        btnPacientes.setText("Pacientes");
+        btnPacientes.setToolTipText("Adicionar um novo paciente");
+        btnPacientes.setBorder(null);
+        btnPacientes.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnPacientes.setMargin(new java.awt.Insets(14, 14, 14, 14));
+        btnPacientes.setMinimumSize(new java.awt.Dimension(103, 17));
+        btnPacientes.setPreferredSize(new java.awt.Dimension(130, 35));
+        btnPacientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_add_paciente1ActionPerformed(evt);
+                btnPacientesActionPerformed(evt);
             }
         });
 
@@ -132,7 +132,7 @@ public class Hospital extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnEnfermeiros, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                             .addComponent(btnMedicos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btn_add_paciente1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnPacientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnConsulta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -143,7 +143,7 @@ public class Hospital extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(60, 60, 60)
-                .addComponent(btn_add_paciente1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60)
                 .addComponent(btnMedicos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60)
@@ -207,13 +207,13 @@ public class Hospital extends javax.swing.JFrame {
         c.setVisible(true);
     }//GEN-LAST:event_btnConsultaActionPerformed
 
-    private void btn_add_paciente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_add_paciente1ActionPerformed
+    private void btnPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPacientesActionPerformed
         // TODO add your handling code here:
-        FormCadPaciente formCadPaciente = new FormCadPaciente();
-        formCadPaciente.setResizable(false);
-        formCadPaciente.setLocationRelativeTo(null);
-        formCadPaciente.setVisible(true);
-    }//GEN-LAST:event_btn_add_paciente1ActionPerformed
+        ListaPacientes listaPacientes = new ListaPacientes(controlador);
+        listaPacientes.setResizable(false);
+        listaPacientes.setLocationRelativeTo(null);
+        listaPacientes.setVisible(true);
+    }//GEN-LAST:event_btnPacientesActionPerformed
 
     private void menuSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSalvarActionPerformed
 //        // TODO add your handling code here:
@@ -273,7 +273,7 @@ public class Hospital extends javax.swing.JFrame {
     private javax.swing.JButton btnConsulta;
     private javax.swing.JButton btnEnfermeiros;
     private javax.swing.JButton btnMedicos;
-    private javax.swing.JButton btn_add_paciente1;
+    private javax.swing.JButton btnPacientes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
